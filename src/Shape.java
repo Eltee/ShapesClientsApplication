@@ -1,6 +1,14 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
+/**
+ * Représente une forme graphique.
+ * 
+ * La classe est abstraite car elle ne représente pas une forme exacte.
+ * 
+ * @auteur	Hugo Lapointe Di Giacomo
+ * @date	19 septembre 2013
+ */
 public abstract class Shape {
 	private final Color COLOR_SQUARE = Color.BLUE;
 	private final Color COLOR_RECTANGLE = Color.RED;
@@ -12,14 +20,31 @@ public abstract class Shape {
 	private String _type;
 	protected Color _color;
 
+	/**
+	 * Constructeur par défaut.
+	 * 
+	 * @param nseq
+	 * @param type
+	 */
 	public Shape(int nseq, String type) {
 		this._nseq = nseq;
 		this._type = type;
 	}
 
+	/**
+	 * Dessines la forme dans le canvas passé.
+	 * 
+	 * @param graphics
+	 */
 	public abstract void draw(Graphics graphics);
 
-	public static Shape create(String sequence) {		
+	/**
+	 * Crée une forme à partir d'une séquence retournée par le serveur.
+	 * 
+	 * @param sequence
+	 * @return
+	 */
+	public static Shape create(String sequence) {
 		// TODO Auto-generated method stub
 
 		return null;
