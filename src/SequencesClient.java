@@ -1,3 +1,5 @@
+import java.util.EventObject;
+
 import javax.swing.SwingWorker;
 import javax.swing.event.EventListenerList;
 
@@ -16,13 +18,23 @@ public class SequencesClient {
 	private boolean _isConnected;
 
 	private SwingWorker _swingWorker;
-	private EventListenerList _listeners;
+	private EventListenerList _listenerList;
 
 	/**
 	 * Constructeur par défaut.
 	 */
 	public SequencesClient() {
-		this._listeners = new EventListenerList();
+		this._listenerList = new EventListenerList();
+	}
+
+	/**
+	 * Retourne tous les observateur de l'objet courant.
+	 * 
+	 * @return
+	 */
+	public SequencesClientListener[] getListeners() {
+		return (SequencesClientListener[]) this._listenerList
+				.getListeners(SequencesClientListener.class);
 	}
 
 	/**
@@ -34,8 +46,12 @@ public class SequencesClient {
 	 * @param dns
 	 */
 	public void start(String dns) {
-		// TODO Implémenter l'alerte aux observateur que le serveur s'est
-		// connecté.
+		EventObject e = new EventObject(this);
+
+		// Alerte les observateur que la connexion au serveur a été créée.
+		for (SequencesClientListener listener : this.getListeners()) {
+			listener.serverConnected(e);
+		}
 
 		this._swingWorker = new SwingWorker() {
 			@Override
@@ -44,6 +60,8 @@ public class SequencesClient {
 					Thread.sleep(DELAY);
 
 					// TODO Implémenter la tâche de fond du client TCP.
+					// TODO Implémenter la prise en charge d'une déconnexion
+					// involontaire.
 				}
 			}
 		};
@@ -60,8 +78,13 @@ public class SequencesClient {
 	 * Retourne une séquence.
 	 * 
 	 * @return
+	 * @throws Exception
 	 */
-	public String getSequence() {
+	public String getSequence() throws Exception {
+		if (!this.isConnected()) {
+			throw new Exception("The connection must be started.");
+		}
+
 		// TODO Implémenter la méthode générée.
 
 		return null;
@@ -69,6 +92,7 @@ public class SequencesClient {
 
 	/**
 	 * Retourne vrai si la connexion au serveur est existante.
+	 * 
 	 * @return
 	 */
 	public boolean isConnected() {
@@ -78,17 +102,19 @@ public class SequencesClient {
 
 	/**
 	 * Ajoute un observateur à la liste d'observateurs du client.
+	 * 
 	 * @param listener
 	 */
 	public void addActionListener(SequencesClientListener listener) {
-		this._listeners.add(SequencesClientListener.class, listener);
+		this._listenerList.add(SequencesClientListener.class, listener);
 	}
 
 	/**
 	 * Retire un observateur de la liste d'observateurs du client.
+	 * 
 	 * @param listener
 	 */
 	public void removeActionListener(SequencesClientListener listener) {
-		this._listeners.remove(SequencesClientListener.class, listener);
+		this._listenerList.remove(SequencesClientListener.class, listener);
 	}
 }

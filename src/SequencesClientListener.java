@@ -1,4 +1,5 @@
 import java.util.EventListener;
+import java.util.EventObject;
 
 /**
  * Représente un observateur de l'objet SequencesClient.
@@ -13,10 +14,10 @@ public interface SequencesClientListener extends EventListener {
 	/**
 	 * Se déclenche lorsque la connexion au serveur est crée.
 	 */
-	public void serverConnected();
+	public void serverConnected(EventObject e);
 
 	/**
 	 * Se déclenche lorsque la connexion au serveur est interrompue.
 	 */
-	public void serverDisconnected();
+	public void serverDisconnected(EventObject e);
 }

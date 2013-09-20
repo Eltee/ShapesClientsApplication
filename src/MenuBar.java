@@ -12,19 +12,35 @@ import javax.swing.event.EventListenerList;
  * l'interface PropertyChangeListener afin d'intérargir lorsque l'utilisateur
  * cliquera sur les items du menu.
  * 
- * @auteur	Hugo Lapointe Di Giacomo
- * @date	19 septembre 2013
+ * @auteur Hugo Lapointe Di Giacomo
+ * @date 19 septembre 2013
  */
 public class MenuBar extends JMenuBar implements PropertyChangeListener {
 
-	private EventListenerList _listeners;
+	private EventListenerList _listenerList;
+
+	/**
+	 * Constructeur par défaut.
+	 */
+	public MenuBar() {
+
+	}
+
+	/**
+	 * Retourne tous les observateur du courant objet.
+	 * @return
+	 */
+	public MenuBarListener[] getListeners() {
+		return (MenuBarListener[]) this._listenerList
+				.getListeners(MenuBarListener.class);
+	}
 
 	/**
 	 * Se déclenche lorsque l'utilisateur clique sur un item du menu.
 	 */
 	@Override
 	public void propertyChange(PropertyChangeEvent arg0) {
-		// TODO Auto-generated method stub
+		// TODO Implémenter la méthode générée.
 
 	}
 
@@ -34,7 +50,7 @@ public class MenuBar extends JMenuBar implements PropertyChangeListener {
 	 * @param listener
 	 */
 	public void addActionListener(MenuBarListener listener) {
-		this._listeners.add(MenuBarListener.class, listener);
+		this._listenerList.add(MenuBarListener.class, listener);
 	}
 
 	/**
@@ -43,6 +59,6 @@ public class MenuBar extends JMenuBar implements PropertyChangeListener {
 	 * @param listener
 	 */
 	public void removeActionListener(MenuBarListener listener) {
-		this._listeners.remove(MenuBarListener.class, listener);
+		this._listenerList.remove(MenuBarListener.class, listener);
 	}
 }

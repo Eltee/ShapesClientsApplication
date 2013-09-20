@@ -1,4 +1,5 @@
 import java.util.EventListener;
+import java.util.EventObject;
 
 /**
  * Représente un observateur de l'objet MenuBar.
@@ -13,15 +14,15 @@ public interface MenuBarListener extends EventListener {
 	/**
 	 * L'utilisateur demande de se connecter au serveur.
 	 */
-	public void requestToConnect();
+	public void requestToConnect(EventObject e);
 
 	/**
 	 * L'utilisateur demande à se déconnecter du serveur.
 	 */
-	public void requestToDisconnect();
+	public void requestToDisconnect(EventObject e);
 
 	/**
 	 * L'utilisateur demande de quitter l'application.
 	 */
-	public void requestToQuit();
+	public void requestToQuit(EventObject e);
 }

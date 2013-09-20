@@ -34,9 +34,9 @@ public abstract class Shape {
 	/**
 	 * Dessines la forme dans le canvas passé.
 	 * 
-	 * @param graphics
+	 * @param g
 	 */
-	public abstract void draw(Graphics graphics);
+	public abstract void paint(Graphics g);
 
 	/**
 	 * Crée une forme à partir d'une séquence retournée par le serveur.
@@ -45,7 +45,7 @@ public abstract class Shape {
 	 * @return
 	 */
 	public static Shape create(String sequence) {
-		// TODO Auto-generated method stub
+		// TODO Implémenter la méthode générée.
 
 		return null;
 	}

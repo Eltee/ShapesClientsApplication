@@ -35,20 +35,21 @@ public class ShapesContainer extends JComponent {
 	}
 
 	/**
-	 * Met à jour les formes du composant.
+	 * Dessine le contenu du composant à l'écran.
 	 */
-	public void update(Graphics graphics) {
-		
+	public void paintComponent(Graphics g) {
+
 		// Dessine chaque forme contenues dans le conposant.
 		for (int i = 0; i < SHAPES_COUNT; i++) {
-			
+
 			// Desinne la forme dans le canvas du composant.
-			this._shapes[i].draw(graphics);
+			this._shapes[i].paint(g);
 		}
 	}
 
 	/**
-	 * Décale les formes afin de toujours garder les 10 dernières formes ajoutées.
+	 * Décale les formes afin de toujours garder les 10 dernières formes
+	 * ajoutées.
 	 */
 	private void shiftDownShapes() {
 		Shape[] shifted = new Shape[SHAPES_COUNT];

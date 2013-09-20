@@ -32,8 +32,8 @@ public class Rectangle extends Shape {
 	 * Dessine le rectangle dans le canvas passé.
 	 */
 	@Override
-	public void draw(Graphics graphics) {
-		// TODO Auto-generated method stub
+	public void paint(Graphics g) {
+		// TODO Implémenter la méthode générée.
 
 	}
 
