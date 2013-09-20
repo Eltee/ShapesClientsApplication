@@ -33,8 +33,14 @@ public class Rectangle extends Shape {
 	 */
 	@Override
 	public void paint(Graphics g) {
-		// TODO Implémenter la méthode générée.
-
+		super.paint(g);
+		
+		g.fillRect(
+				(int)this._p1.getX(),
+				(int)this._p1.getY(),
+				(int)(this._p2.getX() - this._p1.getX()),
+				(int)(this._p2.getY() - this._p1.getY())
+		);
 	}
 
 }

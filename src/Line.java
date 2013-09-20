@@ -33,7 +33,15 @@ public class Line extends Shape {
 	 */
 	@Override
 	public void paint(Graphics g) {
-		// TODO Implémenter la méthode générée.
+		super.paint(g);
+		
+		// Dessine la forme.
+		g.drawLine(
+				(int)this._p1.getX(),
+				(int)this._p1.getY(),
+				(int)this._p2.getX(),
+				(int)this._p2.getY()
+		);
 
 	}
 

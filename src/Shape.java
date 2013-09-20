@@ -6,8 +6,8 @@ import java.awt.Graphics;
  * 
  * La classe est abstraite car elle ne représente pas une forme exacte.
  * 
- * @auteur	Hugo Lapointe Di Giacomo
- * @date	19 septembre 2013
+ * @auteur Hugo Lapointe Di Giacomo
+ * @date 19 septembre 2013
  */
 public abstract class Shape {
 	private final Color COLOR_SQUARE = Color.BLUE;
@@ -18,7 +18,6 @@ public abstract class Shape {
 
 	private int _nseq;
 	private String _type;
-	protected Color _color;
 
 	/**
 	 * Constructeur par défaut.
@@ -36,7 +35,29 @@ public abstract class Shape {
 	 * 
 	 * @param g
 	 */
-	public abstract void paint(Graphics g);
+	public void paint(Graphics g) {
+		
+		// Attribue la couleur à la prochaine forme qui sera dessiné.
+		switch (this._type) {
+		case "SQUARE":
+			g.setColor(COLOR_SQUARE);
+			break;
+		case "RECTANGLE":
+			g.setColor(COLOR_RECTANGLE);
+			break;
+		case "CIRCLE":
+			g.setColor(COLOR_CIRCLE);
+			break;
+		case "ELLIPSE":
+			g.setColor(COLOR_ELLIPSE);
+			break;
+		case "LINE":
+			g.setColor(COLOR_LINE);
+			break;
+		default:
+			g.setColor(Color.GRAY);
+		}
+	}
 
 	/**
 	 * Crée une forme à partir d'une séquence retournée par le serveur.

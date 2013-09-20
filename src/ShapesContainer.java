@@ -36,8 +36,9 @@ public class ShapesContainer extends Canvas {
 	/**
 	 * Dessine le contenu du composant à l'écran.
 	 */
-	public void paintComponent(Graphics g) {
-
+	public void paint(Graphics g) {
+		super.paint(g);
+		
 		// Dessine chaque forme contenues dans le conposant.
 		for (int i = 0; i < SHAPES_COUNT; i++) {
 

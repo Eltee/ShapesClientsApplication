@@ -16,8 +16,8 @@ public class ShapesClientApplication {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 
-				// Affiche la fenêtre principale.
-				(new MainForm()).setVisible(true);
+				MainForm form = new MainForm();
+				form.setVisible(true);
 			}
 		});
 

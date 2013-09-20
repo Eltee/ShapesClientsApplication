@@ -24,6 +24,7 @@ public class MainForm extends JFrame implements SequencesClientListener, WindowL
 	private ShapesContainer _shapesContainer;
 	private SequencesClient _sequencesClient;
 	private MenuBar _menuBar;
+	
 	//Le panel principal qui contiendra l'élément Canvas _shapesContainer
 	private JPanel _panel;
 	private int resX = 800;
