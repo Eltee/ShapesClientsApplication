@@ -1,4 +1,10 @@
+import java.awt.Dimension;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.util.EventObject;
+
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  * Représente la fenêtre principale.
@@ -11,14 +17,17 @@ import javax.swing.JFrame;
  * @auteur Hugo Lapointe Di Giacomo
  * @date 19 septembre 2013
  */
-public class MainForm extends JFrame implements SequencesClientListener,
-		MenuBarListener {
+public class MainForm extends JFrame implements SequencesClientListener, WindowListener{
 	
 	private static final long serialVersionUID = 8403163808442068907L;
 	
 	private ShapesContainer _shapesContainer;
 	private SequencesClient _sequencesClient;
 	private MenuBar _menuBar;
+	//Le panel principal qui contiendra l'élément Canvas _shapesContainer
+	private JPanel _panel;
+	private int resX = 800;
+	private int resY = 600;
 
 	/**
 	 * Constructeur par défaut.
@@ -27,46 +36,62 @@ public class MainForm extends JFrame implements SequencesClientListener,
 	 * S'ajoute comme observateur des objets SequencesClient et MenuBar.
 	 */
 	public MainForm() {
+		super(LocalisationResource.getResource("app.frame.title"));
+		this.addWindowListener(this);
 		this._shapesContainer = new ShapesContainer();
 		this._sequencesClient = new SequencesClient();
-		this._menuBar = new MenuBar();
+		this._menuBar = new MenuBar(this);
+		
+		//On initialise la fenêtre
+		_panel = (JPanel) this.getContentPane();
+		_panel.setPreferredSize(new Dimension(resX,resY));
+		_panel.setLayout(null);
+
+		setBounds(0,0,resX,resY);
+		_panel.add(_shapesContainer);
+		
+		//On s'assure que le bouton X de la fenêtre n'appel pas directement System.exit, on veut gérer la fermeture manuellement
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		
+		//On ajoute le menuBar
+		this.setJMenuBar(_menuBar);
 
 		this._sequencesClient.addActionListener(this);
-		this._menuBar.addActionListener(this);
 	}
 
 	/**
-	 * Se déclence lorsque l'utilisateur demande à se connecter au serveur.
+	 * Se déclenche lorsque l'utilisateur demande à se connecter au serveur.
 	 */
-	@Override
 	public void requestToConnect() {
 		// TODO Implémenter la méthode générée.
-
+		System.out.println("Request to connect.");
+		_sequencesClient.start("localhost", 10000);
 	}
 
 	/**
-	 * Se déclence lorsque l'utilisateur demande à se déconnecter du serveur.
+	 * Se déclenche lorsque l'utilisateur demande à se déconnecter du serveur.
 	 */
-	@Override
 	public void requestToDisconnect() {
 		// TODO Implémenter la méthode générée.
-
+		System.out.println("Request to disconnect.");
+		_sequencesClient.stop();
 	}
 
 	/**
-	 * Se déclence lorsque l'utilisateur demande à quitter l'application.
+	 * Se déclenche lorsque l'utilisateur demande à quitter l'application.
 	 */
-	@Override
 	public void requestToQuit() {
 		// TODO Implémenter la méthode générée.
-
+		System.out.println("Request to quit.");
+		_sequencesClient.stop();
+		System.exit(0);
 	}
 
 	/**
-	 * Se déclence lorsque le serveur s'est connecté.
+	 * Se déclenche lorsque le serveur s'est connecté.
 	 */
 	@Override
-	public void serverConnected() {
+	public void serverConnected(EventObject e) {
 		// TODO Implémenter la méthode générée.
 
 	}
@@ -75,9 +100,49 @@ public class MainForm extends JFrame implements SequencesClientListener,
 	 * Se déclenche lorsque le serveur s'est déconnecté.
 	 */
 	@Override
-	public void serverDisconnected() {
+	public void serverDisconnected(EventObject e) {
 		// TODO Implémenter la méthode générée.
 
 	}
 
+	@Override
+	public void windowClosed(WindowEvent e) {
+		requestToQuit();		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }
