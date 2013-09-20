@@ -2,9 +2,9 @@
 Cours:  LOG121
 Projet: Laboratoire #1
 Nom du fichier: LocalisationResource.java
-Date crÃ©Ã©: 2013-05-03
+Date créé: 2013-05-03
 *******************************************************
-* Ce code est basÃ© d'un exemple sur Internet, de David Geary, Ã  la page suivante:
+* Ce code est basé d'un exemple sur Internet, de David Geary, à la page suivante:
 * http://www.javaworld.com/javaworld/jw-05-2003/jw-0530-designpatterns-p2.html
 Historique des modifications
 *******************************************************
@@ -42,7 +42,7 @@ public class LocalisationResource {
 	   };
 	   
 	   /**
-	    * Retourne un mot (dans la langue de l'application) liÃ© Ã  un champs
+	    * Retourne un mot (dans la langue de l'application) lié à  un champs
 	    * @param key champs
 	    * @return
 	    */

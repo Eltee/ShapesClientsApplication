@@ -14,7 +14,7 @@ import javax.swing.event.EventListenerList;
  * 
  * Gère les connexions ainsi que les appels au serveur.
  * 
- * @auteur Renaud Bigras
+ * @auteur Hugo Lapointe Di Giacomo
  * @date 19 septembre 2013
  */
 public class SequencesClient {
@@ -54,9 +54,7 @@ public class SequencesClient {
 	 * 
 	 * @param dns
 	 */
-	public void start(String dns, int port) {
-		final String _dns = dns;
-		final int _port = port;
+	public void start(final String dns, final int port) {
 		
 		//Si déjà connecté, ne rien faire
 		if(_isConnected){
@@ -76,7 +74,7 @@ public class SequencesClient {
 				protected Object doInBackground() throws Exception {
 					//On se connecte au serveur et on initialize le input/output
 					try{
-						socket = new Socket(_dns, _port);
+						socket = new Socket(dns, port);
 						out = new PrintWriter(socket.getOutputStream(), 
 				                 true);
 						in = new BufferedReader(new InputStreamReader(
@@ -84,13 +82,15 @@ public class SequencesClient {
 						_isConnected = true;
 					}
 					catch (UnknownHostException e) {
-					    System.out.println("Unknown host: localhost");
+					    System.out.println("Unknown host: "+ dns);
 					    System.exit(1);
 					} 
 					catch  (IOException e) {
 					    System.out.println("No I/O");
 					    System.exit(1);
 					}
+					//TODO: Erreur standard
+				
 					//Tant que la connection dure..
 					while (_isConnected) {
 						
@@ -104,7 +104,7 @@ public class SequencesClient {
 						} 
 						catch (IOException e){
 						     System.out.println("Read failed");
-						     System.exit(1);
+						     //System.exit(1);
 						}
 						
 						//..ensuite on lui envoi notre commande..
@@ -117,7 +117,7 @@ public class SequencesClient {
 						} 
 						catch (IOException e){
 						     System.out.println("Read failed");
-						     System.exit(1);
+						     //System.exit(1);
 						}
 						
 					}
@@ -148,9 +148,11 @@ public class SequencesClient {
 			} 
 			catch (IOException e) {
 				System.out.println("No I/O");
-			     System.exit(1);
+			     //System.exit(1);
 			}
-			_isConnected = false;
+			finally{
+				_isConnected = false;
+			}
 		}
 	}
 

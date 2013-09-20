@@ -22,7 +22,7 @@ import javax.swing.event.MenuListener;
  */
 public class MenuBar extends JMenuBar implements ActionListener{
 	
-	private MainForm parent; //Le parent du menu; c'est-à=dire la fenêtre principale
+	private MainForm fenetre; //Le parent du menu; c'est-à=dire la fenêtre principale
 	private ArrayList<JMenu> menus; //Liste des menus dans le menuBar
 	private static final String //Les liens vers les noms propres à la langue courante
 		MENU_FICHIER_TITRE = "app.frame.menus.file.title",
@@ -40,7 +40,7 @@ public class MenuBar extends JMenuBar implements ActionListener{
 	 */
 	public MenuBar(MainForm parent) {
 		//On lie le menu à son parent
-		this.parent = parent;
+		this.fenetre = parent;
 		
 		menus = new ArrayList<JMenu>();
 		
@@ -86,21 +86,23 @@ public class MenuBar extends JMenuBar implements ActionListener{
 		}
 		
 	}
+	
+	//TODO: update()
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		//Gestion des evenements
 		if(e.getActionCommand().equals("connecter")){
-			 parent.requestToConnect();
+			 fenetre.requestToConnect();
 		}
 		else if(e.getActionCommand().equals("deconnecter")){
-			parent.requestToDisconnect();
+			fenetre.requestToDisconnect();
 		}
 		else if(e.getActionCommand().equals("quitter")){
-			parent.requestToQuit();
+			fenetre.requestToQuit();
 		}
 		else if(e.getActionCommand().equals("apropos")){
-			JOptionPane.showMessageDialog(parent,
+			JOptionPane.showMessageDialog(fenetre,
 					LocalisationResource.getResource(MESSAGE_DIALOGUE_A_PROPOS),
 					LocalisationResource.getResource(MENU_AIDE_PROPOS),
 				    JOptionPane.PLAIN_MESSAGE);
