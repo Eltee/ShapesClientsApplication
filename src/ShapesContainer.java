@@ -1,6 +1,5 @@
+import java.awt.Canvas;
 import java.awt.Graphics;
-
-import javax.swing.JComponent;
 
 /**
  * Représente le composant qui contiendra les formes graphiques envoyés par le
@@ -12,7 +11,7 @@ import javax.swing.JComponent;
  * @auteur Hugo Lapointe Di Giacomo
  * @date 19 septembre 2013
  */
-public class ShapesContainer extends JComponent {
+public class ShapesContainer extends Canvas {
 	private final int SHAPES_COUNT = 10;
 
 	private Shape[] _shapes;
