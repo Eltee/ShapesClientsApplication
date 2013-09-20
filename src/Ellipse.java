@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 
 /**
@@ -6,8 +7,8 @@ import java.awt.geom.Point2D;
  * 
  * Hérite de la classe Shape représentant une forme graphique.
  * 
- * @auteur	Hugo Lapointe Di Giacomo
- * @date	19 septembre 2013
+ * @auteur Hugo Lapointe Di Giacomo
+ * @date 19 septembre 2013
  */
 public class Ellipse extends Shape {
 
@@ -52,7 +53,14 @@ public class Ellipse extends Shape {
 	 */
 	@Override
 	public void paint(Graphics g) {
-		// TODO Implémenter la méthode générée.
-
+		super.paint(g);
+		
+		// Dessine la forme.
+		g.fillOval(
+				(int) this._center.getX() - this._radiusX,
+				(int) this._center.getY() - this._radiusY, 
+				(int) 2	* this._radiusX, 
+				(int) 2 * this._radiusY
+		);
 	}
 }

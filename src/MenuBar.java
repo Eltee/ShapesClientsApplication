@@ -1,7 +1,9 @@
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.event.EventListenerList;
 
 /**
@@ -23,11 +25,27 @@ public class MenuBar extends JMenuBar implements PropertyChangeListener {
 	 * Constructeur par défaut.
 	 */
 	public MenuBar() {
+		JMenu fileMenu = new JMenu("File");
+		JMenuItem quitItem = new JMenuItem("Quit");
+		fileMenu.add(quitItem);
+		add(fileMenu);
 
+		JMenu serverMenu = new JMenu("server");
+		JMenuItem connectItem = new JMenuItem("Connect...");
+		JMenuItem disconnectItem = new JMenuItem("Disconnect");
+		serverMenu.add(connectItem);
+		serverMenu.add(disconnectItem);
+		add(serverMenu);
+
+		JMenu helpMenu = new JMenu("?");
+		JMenuItem aboutItem = new JMenuItem("About...");
+		helpMenu.add(aboutItem);
+		add(helpMenu);
 	}
 
 	/**
 	 * Retourne tous les observateur du courant objet.
+	 * 
 	 * @return
 	 */
 	public MenuBarListener[] getListeners() {

@@ -38,7 +38,8 @@ public class ShapesContainer extends JComponent {
 	 * Dessine le contenu du composant à l'écran.
 	 */
 	public void paintComponent(Graphics g) {
-
+		super.paintComponent(g);
+		
 		// Dessine chaque forme contenues dans le conposant.
 		for (int i = 0; i < SHAPES_COUNT; i++) {
 
