@@ -1,10 +1,13 @@
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.event.EventListenerList;
+import javax.swing.JOptionPane;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 
 /**
  * Représente le menu de de la fenêtre principale.
@@ -17,66 +20,94 @@ import javax.swing.event.EventListenerList;
  * @auteur Hugo Lapointe Di Giacomo
  * @date 19 septembre 2013
  */
-public class MenuBar extends JMenuBar implements PropertyChangeListener {
-
-	private EventListenerList _listenerList;
+public class MenuBar extends JMenuBar implements ActionListener{
+	
+	private MainForm parent; //Le parent du menu; c'est-à=dire la fenêtre principale
+	private ArrayList<JMenu> menus; //Liste des menus dans le menuBar
+	private static final String //Les liens vers les noms propres à la langue courante
+		MENU_FICHIER_TITRE = "app.frame.menus.file.title",
+		MENU_FICHIER_QUITTER = "app.frame.menus.file.exit",
+		MENU_ACTIONS_TITRE = "app.frame.menus.actions.title",
+		MENU_ACTIONS_DEMARRER = "app.frame.menus.actions.start",
+		MENU_ACTIONS_ARRETER = "app.frame.menus.actions.stop",
+		MENU_AIDE_TITRE = "app.frame.menus.help.title",
+		MENU_AIDE_PROPOS = "app.frame.menus.help.about",
+		MENU_AIDE_AIDE = "app.frame.menus.help.help",
+		MESSAGE_DIALOGUE_A_PROPOS = "app.frame.dialog.about";
 
 	/**
 	 * Constructeur par défaut.
 	 */
-	public MenuBar() {
-		JMenu fileMenu = new JMenu("File");
-		JMenuItem quitItem = new JMenuItem("Quit");
-		fileMenu.add(quitItem);
-		add(fileMenu);
-
-		JMenu serverMenu = new JMenu("server");
-		JMenuItem connectItem = new JMenuItem("Connect...");
-		JMenuItem disconnectItem = new JMenuItem("Disconnect");
-		serverMenu.add(connectItem);
-		serverMenu.add(disconnectItem);
-		add(serverMenu);
-
-		JMenu helpMenu = new JMenu("?");
-		JMenuItem aboutItem = new JMenuItem("About...");
-		helpMenu.add(aboutItem);
-		add(helpMenu);
+	public MenuBar(MainForm parent) {
+		//On lie le menu à son parent
+		this.parent = parent;
+		
+		menus = new ArrayList<JMenu>();
+		
+		JMenuItem menuItem;
+		
+		//On créer les menus à ajouter, on leur attribue une tache et on les lie au listener (this)
+		
+		menus.add(new JMenu(LocalisationResource.getResource(MENU_FICHIER_TITRE)));
+		
+		menuItem = new JMenuItem(LocalisationResource.getResource(MENU_FICHIER_QUITTER));
+		menuItem.setActionCommand("quitter");
+		menuItem.addActionListener(this);
+		menus.get(menus.size()-1).add(menuItem);
+		
+		
+		menus.add(new JMenu(LocalisationResource.getResource(MENU_ACTIONS_TITRE)));
+		
+		menuItem = new JMenuItem(LocalisationResource.getResource(MENU_ACTIONS_DEMARRER));
+		menuItem.setActionCommand("connecter");
+		menuItem.addActionListener(this);
+		menus.get(menus.size()-1).add(menuItem);
+		
+		menuItem = new JMenuItem(LocalisationResource.getResource(MENU_ACTIONS_ARRETER));
+		menuItem.setActionCommand("deconnecter");
+		menuItem.addActionListener(this);
+		menus.get(menus.size()-1).add(menuItem);
+		
+		menus.add(new JMenu(LocalisationResource.getResource(MENU_AIDE_TITRE)));
+		
+		menuItem = new JMenuItem(LocalisationResource.getResource(MENU_AIDE_PROPOS));
+		menuItem.setActionCommand("apropos");
+		menuItem.addActionListener(this);
+		menus.get(menus.size()-1).add(menuItem);
+		
+		menuItem = new JMenuItem(LocalisationResource.getResource(MENU_AIDE_AIDE));
+		menuItem.setActionCommand("aide");
+		menuItem.addActionListener(this);
+		menus.get(menus.size()-1).add(menuItem);
+		
+		//On ajoute les menus au menuBar
+		for(int i=0; i<menus.size(); i++){
+			this.add(menus.get(i));
+		}
+		
 	}
 
-	/**
-	 * Retourne tous les observateur du courant objet.
-	 * 
-	 * @return
-	 */
-	public MenuBarListener[] getListeners() {
-		return (MenuBarListener[]) this._listenerList
-				.getListeners(MenuBarListener.class);
-	}
-
-	/**
-	 * Se déclenche lorsque l'utilisateur clique sur un item du menu.
-	 */
 	@Override
-	public void propertyChange(PropertyChangeEvent arg0) {
-		// TODO Implémenter la méthode générée.
-
+	public void actionPerformed(ActionEvent e) {
+		//Gestion des evenements
+		if(e.getActionCommand().equals("connecter")){
+			 parent.requestToConnect();
+		}
+		else if(e.getActionCommand().equals("deconnecter")){
+			parent.requestToDisconnect();
+		}
+		else if(e.getActionCommand().equals("quitter")){
+			parent.requestToQuit();
+		}
+		else if(e.getActionCommand().equals("apropos")){
+			JOptionPane.showMessageDialog(parent,
+					LocalisationResource.getResource(MESSAGE_DIALOGUE_A_PROPOS),
+					LocalisationResource.getResource(MENU_AIDE_PROPOS),
+				    JOptionPane.PLAIN_MESSAGE);
+		}
+		else{
+			System.out.println(e.getActionCommand());
+		}
 	}
-
-	/**
-	 * Ajoute un observateur à la liste d'observateurs du menu.
-	 * 
-	 * @param listener
-	 */
-	public void addActionListener(MenuBarListener listener) {
-		this._listenerList.add(MenuBarListener.class, listener);
-	}
-
-	/**
-	 * Retire un observateur de la liste d'observateurs du menu.
-	 * 
-	 * @param listener
-	 */
-	public void removeActionListener(MenuBarListener listener) {
-		this._listenerList.remove(MenuBarListener.class, listener);
-	}
+	
 }
